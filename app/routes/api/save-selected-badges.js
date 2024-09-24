@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/api/save-selected-badges", async (req, res) => {
   const { storeId, badges } = req.body;
+  console.log(req.body)
 
   try {
     let badgeDoc = await Badge.findOne({ storeId });
