@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Page, Card, Button, Layout } from "@shopify/polaris";
+import { Page, Card, Button, Layout, Spinner } from "@shopify/polaris";
 
 const availableBadges = [
   { id: 1, name: "VISA", imageUrl: "/badges/icons8-visa-200.png" },
@@ -12,46 +12,51 @@ const availableBadges = [
 
 const Badges = () => {
   const [selectedBadges, setSelectedBadges] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [storeId, setStoreId] = useState("theh2o2"); // Default storeId is set to 'theh2o2'
-
-  // Fetch selected badges from the backend API
+  const [isLoading, setIsLoading] = useState(true); // Start with loading state
+  const [isSaving, setIsSaving] = useState(false); // For handling save button state
+  const [storeId, setStoreId] = useState("theh2o2"); // Default storeId
+  
   useEffect(() => {
+    setIsLoading(true);
     fetch("https://truestbadgebackend.vercel.app/api/get-selected-badges", {
-      method: "POST",  // Changed to POST
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ storeId: "theh2o2" }),  // Send storeId in the body
+      body: JSON.stringify({ storeId: "theh2o2" }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.selectedBadges) {
           setSelectedBadges(data.selectedBadges);
         }
+        setIsLoading(false); // Ensure we update isLoading after setting state
       })
-      .catch((error) => console.error("Error fetching badges:", error));
-  }, []);
+      .catch((error) => {
+        console.error("Error fetching badges:", error);
+        setIsLoading(false);
+      });
+  }, [storeId]);
 
-  // Handle badge selection/deselection
   const handleBadgeChange = (id) => {
-    setSelectedBadges((prevSelectedBadges) => {
-      if (prevSelectedBadges.includes(id)) {
-        return prevSelectedBadges.filter((badgeId) => badgeId !== id);
-      } else {
-        return [...prevSelectedBadges, id];
-      }
-    });
+    if (!isLoading && !isSaving) {
+      setSelectedBadges((prevSelectedBadges) => {
+        if (prevSelectedBadges.includes(id)) {
+          return prevSelectedBadges.filter((badgeId) => badgeId !== id);
+        } else {
+          return [...prevSelectedBadges, id];
+        }
+      });
+    }
   };
 
-  // Save selected badges to the backend API
   const handleSave = () => {
     if (!storeId) {
       alert("No storeId found");
       return;
     }
 
-    setIsLoading(true);
+    setIsSaving(true); // Show saving state while saving
     fetch("https://truestbadgebackend.vercel.app/api/save-selected-badges", {
       method: "POST",
       headers: {
@@ -61,7 +66,7 @@ const Badges = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setIsLoading(false);
+        setIsSaving(false);
         if (data.success) {
           alert("Badges saved successfully!");
         } else {
@@ -69,7 +74,7 @@ const Badges = () => {
         }
       })
       .catch((error) => {
-        setIsLoading(false);
+        setIsSaving(false);
         console.error("Error saving badges:", error);
         alert("Error saving badges");
       });
@@ -78,61 +83,70 @@ const Badges = () => {
   return (
     <Page title="Select Trust Badges">
       <Layout>
-        <Layout.Section>
-          <p>{storeId ? `Hello, store ID: ${storeId}` : "No store ID found"}</p>
-        </Layout.Section>
+        {isLoading ? (
+          <div style={{ textAlign: 'center', marginTop: '100px' }}>
+            <Spinner accessibilityLabel="Loading badges" size="large" />
+          </div>
+        ) : (
+          <>
+            <Layout.Section>
+              <p>{storeId ? `Hello, store ID: ${storeId}` : "No store ID found"}</p>
+            </Layout.Section>
 
-        <Layout.Section>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)", // 3 badges in a row
-              gap: "20px",
-              justifyItems: "center",
-            }}
-          >
-            {availableBadges.map((badge) => (
-              <Card sectioned key={badge.id}>
-                <div
-                  onClick={() => handleBadgeChange(badge.id)}
-                  style={{
-                    backgroundColor: selectedBadges.includes(badge.id)
-                      ? "#333" // dark gray for selected
-                      : "#fff", // white for unselected
-                    cursor: "pointer",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    width: "120px", // reduced size
-                    height: "120px", // reduced size
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+            <Layout.Section>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)", // 3 badges in a row
+                  gap: "20px",
+                  justifyItems: "center",
+                }}
+              >
+                {availableBadges.map((badge) => (
+                  <Card sectioned key={badge.id}>
+                    <div
+                      onClick={() => handleBadgeChange(badge.id)}
+                      style={{
+                        backgroundColor: selectedBadges.includes(badge.id)
+                          ? "#333"
+                          : "#fff",
+                        cursor: "pointer",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        width: "120px",
+                        height: "120px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={badge.imageUrl}
+                        alt={badge.name}
+                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                      />
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </Layout.Section>
+
+            <Layout.Section>
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <Button
+                  onClick={handleSave}
+                  primary
+                  size="large"
+                  style={{ marginBottom: "30px" }}
+                  loading={isSaving}
+                  disabled={isSaving || isLoading}
                 >
-                  <img
-                    src={badge.imageUrl}
-                    alt={badge.name}
-                    style={{ width: "100px", height: "100px", objectFit: "contain" }}
-                  />
-                </div>
-              </Card>
-            ))}
-          </div>
-        </Layout.Section>
-
-        <Layout.Section>
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Button
-              onClick={handleSave}
-              primary
-              size="large" // larger button
-              style={{ marginBottom: "30px" }} // margin below the button
-              loading={isLoading} // Show loading state when saving
-            >
-              Save Selected Badges
-            </Button>
-          </div>
-        </Layout.Section>
+                  Save Selected Badges
+                </Button>
+              </div>
+            </Layout.Section>
+          </>
+        )}
       </Layout>
     </Page>
   );
