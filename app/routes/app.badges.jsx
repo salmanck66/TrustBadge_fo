@@ -18,25 +18,23 @@ const Badges = () => {
   
   useEffect(() => {
     setIsLoading(true);
-    fetch("https://truestbadgebackend.vercel.app/api/get-selected-badges", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ storeId: "theh2o2" }),
+    fetch('https://truestbadgebackend.vercel.app/api/get-selected-badges', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ storeId: 'theh2o2' }),
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.selectedBadges) {
           setSelectedBadges(data.selectedBadges);
         }
-        setIsLoading(false); // Ensure we update isLoading after setting state
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching badges:", error);
+      .catch(error => {
+        console.error('Error fetching badges:', error);
         setIsLoading(false);
       });
-  }, [storeId]);
+  }, []);
 
   const handleBadgeChange = (id) => {
     if (!isLoading && !isSaving) {
