@@ -3,7 +3,7 @@
 client_id = "d80d8f3b9e5ceabea945342274428aa0"
 name = "trust-badge-app"
 handle = "trust-badge-app-2"
-application_url = "https://profiles-millennium-magic-tb.trycloudflare.com"
+application_url = "https://liechtenstein-drag-opened-tags.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://profiles-millennium-magic-tb.trycloudflare.com/auth/callback",
-  "https://profiles-millennium-magic-tb.trycloudflare.com/auth/shopify/callback",
-  "https://profiles-millennium-magic-tb.trycloudflare.com/api/auth/callback"
+  "https://liechtenstein-drag-opened-tags.trycloudflare.com/auth/callback",
+  "https://liechtenstein-drag-opened-tags.trycloudflare.com/auth/shopify/callback",
+  "https://liechtenstein-drag-opened-tags.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
