@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Page, Card, Checkbox, Button, Layout } from "@shopify/polaris";
 
-// Assuming you have a list of available badges
+// Assuming you have stored these images inside the 'public/badges' folder
 const availableBadges = [
-  { id: 1, name: "VISA", imageUrl: "/path-to-visa-image" },
-  { id: 2, name: "MASTERCARD", imageUrl: "/path-to-mastercard-image" },
-  { id: 3, name: "PAYPAL", imageUrl: "/path-to-paypal-image" },
-  { id: 4, name: "AMERICAN EXPRESS", imageUrl: "/path-to-american-express-image" },
-  { id: 5, name: "GOOGLE PAY", imageUrl: "/path-to-google-pay-image" },
-  { id: 6, name: "AMAZON PAY", imageUrl: "/path-to-amazon-pay-image" },
+  { id: 1, name: "VISA", imageUrl: "/badges/icons8-visa-200" },
+  { id: 2, name: "MASTERCARD", imageUrl: "/badges/icons8-mastercard-200.png" },
+  { id: 3, name: "PAYPAL", imageUrl: "/badges/icons8-paypal-200.png" },
+  { id: 4, name: "AMERICAN EXPRESS", imageUrl: "/badges/icons8-american-express-200.png" },
+  { id: 5, name: "GOOGLE PAY", imageUrl: "/badges/icons8-google-pay-240.png" },
+  { id: 6, name: "AMAZON PAY", imageUrl: "/badges/icons8-amazon-pay-200.png" },
 ];
 
 const Badges = () => {
@@ -17,7 +17,6 @@ const Badges = () => {
   // Load initially selected badges from the server (placeholder logic)
   useEffect(() => {
     // Fetch existing selected badges for the store (e.g., from a MongoDB API)
-    // This is a placeholder for actual fetching logic.
     fetch("/api/get-selected-badges")
       .then((res) => res.json())
       .then((data) => {
@@ -49,7 +48,6 @@ const Badges = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          // Success feedback (could use Shopify Toast or similar)
           console.log("Badges saved successfully!");
         }
       });
@@ -70,6 +68,11 @@ const Badges = () => {
                 },
               ]}
             >
+              <img
+                src={badge.imageUrl}
+                alt={badge.name}
+                style={{ width: "200px", height: "200px", marginBottom: "10px" }}
+              />
               <Checkbox
                 label={badge.name}
                 checked={selectedBadges.includes(badge.id)}
