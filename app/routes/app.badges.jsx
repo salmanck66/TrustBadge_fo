@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Page, Card, Button, Layout } from "@shopify/polaris";
 
-// Assuming you have stored these images inside the 'public/badges' folder
 const availableBadges = [
   { id: 1, name: "VISA", imageUrl: "/badges/icons8-visa-200.png" },
   { id: 2, name: "MASTERCARD", imageUrl: "/badges/icons8-mastercard-200.png" },
@@ -13,18 +12,28 @@ const availableBadges = [
 
 const Badges = () => {
   const [selectedBadges, setSelectedBadges] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [storeId, setStoreId] = useState("theh2o2"); // Default storeId is set to 'theh2o2'
 
+  // Fetch selected badges from the backend API
   useEffect(() => {
-    fetch("/api/get-selected-badges?storeId=example-store-id") // Replace with actual store ID
+    fetch("https://truestbadgebackend.vercel.app/api/get-selected-badges", {
+      method: "POST",  // Changed to POST
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ storeId: "theh2o2" }),  // Send storeId in the body
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.selectedBadges) {
           setSelectedBadges(data.selectedBadges);
         }
-      });
+      })
+      .catch((error) => console.error("Error fetching badges:", error));
   }, []);
-  
 
+  // Handle badge selection/deselection
   const handleBadgeChange = (id) => {
     setSelectedBadges((prevSelectedBadges) => {
       if (prevSelectedBadges.includes(id)) {
@@ -35,26 +44,44 @@ const Badges = () => {
     });
   };
 
+  // Save selected badges to the backend API
   const handleSave = () => {
-    fetch("/api/save-selected-badges", {
+    if (!storeId) {
+      alert("No storeId found");
+      return;
+    }
+
+    setIsLoading(true);
+    fetch("https://truestbadgebackend.vercel.app/api/save-selected-badges", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ storeId: "example-store-id", badges: selectedBadges }), // Replace with actual store ID
+      body: JSON.stringify({ storeId, badges: selectedBadges }),
     })
       .then((res) => res.json())
       .then((data) => {
+        setIsLoading(false);
         if (data.success) {
-          console.log("Badges saved successfully!");
+          alert("Badges saved successfully!");
+        } else {
+          alert("Failed to save badges");
         }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error saving badges:", error);
+        alert("Error saving badges");
       });
   };
-  
 
   return (
     <Page title="Select Trust Badges">
       <Layout>
+        <Layout.Section>
+          <p>{storeId ? `Hello, store ID: ${storeId}` : "No store ID found"}</p>
+        </Layout.Section>
+
         <Layout.Section>
           <div
             style={{
@@ -100,6 +127,7 @@ const Badges = () => {
               primary
               size="large" // larger button
               style={{ marginBottom: "30px" }} // margin below the button
+              loading={isLoading} // Show loading state when saving
             >
               Save Selected Badges
             </Button>

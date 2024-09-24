@@ -3,7 +3,7 @@
 client_id = "90e3fc5e055c3421688ec0a18533881d"
 name = "trust_badges_fo"
 handle = "trust_badges_fo"
-application_url = "https://arnold-biodiversity-exactly-reporter.trycloudflare.com"
+application_url = "https://road-smoke-featured-alpha.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://arnold-biodiversity-exactly-reporter.trycloudflare.com/auth/callback",
-  "https://arnold-biodiversity-exactly-reporter.trycloudflare.com/auth/shopify/callback",
-  "https://arnold-biodiversity-exactly-reporter.trycloudflare.com/api/auth/callback"
+  "https://road-smoke-featured-alpha.trycloudflare.com/auth/callback",
+  "https://road-smoke-featured-alpha.trycloudflare.com/auth/shopify/callback",
+  "https://road-smoke-featured-alpha.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

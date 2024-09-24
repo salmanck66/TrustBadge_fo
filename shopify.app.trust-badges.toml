@@ -1,0 +1,24 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "f52d217a9c86bc7cbdedbc87c090ee72"
+name = "trust badges "
+handle = "trust-badges-12"
+application_url = "https://paso-switzerland-fur-poker.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "theh2o2.myshopify.com"
+
+[auth]
+redirect_urls = [
+  "https://paso-switzerland-fur-poker.trycloudflare.com/auth/callback",
+  "https://paso-switzerland-fur-poker.trycloudflare.com/auth/shopify/callback",
+  "https://paso-switzerland-fur-poker.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
