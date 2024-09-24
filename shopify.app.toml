@@ -3,7 +3,7 @@
 client_id = "d80d8f3b9e5ceabea945342274428aa0"
 name = "trust-badge-app"
 handle = "trust-badge-app-2"
-application_url = "https://report-be-peru-signature.trycloudflare.com"
+application_url = "https://circuits-accommodations-fibre-dealtime.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://report-be-peru-signature.trycloudflare.com/auth/callback",
-  "https://report-be-peru-signature.trycloudflare.com/auth/shopify/callback",
-  "https://report-be-peru-signature.trycloudflare.com/api/auth/callback"
+  "https://circuits-accommodations-fibre-dealtime.trycloudflare.com/auth/callback",
+  "https://circuits-accommodations-fibre-dealtime.trycloudflare.com/auth/shopify/callback",
+  "https://circuits-accommodations-fibre-dealtime.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

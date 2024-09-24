@@ -15,8 +15,7 @@ const Badges = () => {
   const [selectedBadges, setSelectedBadges] = useState([]);
 
   useEffect(() => {
-    // Fetch existing selected badges for the store (e.g., from a MongoDB API)
-    fetch("/api/get-selected-badges")
+    fetch("/api/get-selected-badges?storeId=example-store-id") // Replace with actual store ID
       .then((res) => res.json())
       .then((data) => {
         if (data.selectedBadges) {
@@ -24,6 +23,7 @@ const Badges = () => {
         }
       });
   }, []);
+  
 
   const handleBadgeChange = (id) => {
     setSelectedBadges((prevSelectedBadges) => {
@@ -36,13 +36,12 @@ const Badges = () => {
   };
 
   const handleSave = () => {
-    // Send selected badges to the server to store them in the DB
     fetch("/api/save-selected-badges", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ badges: selectedBadges }),
+      body: JSON.stringify({ storeId: "example-store-id", badges: selectedBadges }), // Replace with actual store ID
     })
       .then((res) => res.json())
       .then((data) => {
@@ -51,6 +50,7 @@ const Badges = () => {
         }
       });
   };
+  
 
   return (
     <Page title="Select Trust Badges">
