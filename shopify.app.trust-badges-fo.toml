@@ -3,7 +3,7 @@
 client_id = "90e3fc5e055c3421688ec0a18533881d"
 name = "trust_badges_fo"
 handle = "trust_badges_fo"
-application_url = "https://secrets-observer-ok-tied.trycloudflare.com"
+application_url = "https://latino-obesity-manner-personals.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_content,read_products,write_script_tags,write_themes"
 
 [auth]
 redirect_urls = [
-  "https://secrets-observer-ok-tied.trycloudflare.com/auth/callback",
-  "https://secrets-observer-ok-tied.trycloudflare.com/auth/shopify/callback",
-  "https://secrets-observer-ok-tied.trycloudflare.com/api/auth/callback"
+  "https://latino-obesity-manner-personals.trycloudflare.com/auth/callback",
+  "https://latino-obesity-manner-personals.trycloudflare.com/auth/shopify/callback",
+  "https://latino-obesity-manner-personals.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
