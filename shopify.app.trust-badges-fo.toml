@@ -3,7 +3,7 @@
 client_id = "90e3fc5e055c3421688ec0a18533881d"
 name = "trust_badges_fo"
 handle = "trust_badges_fo"
-application_url = "https://docs-smithsonian-vacuum-presence.trycloudflare.com"
+application_url = "https://secrets-observer-ok-tied.trycloudflare.com"
 embedded = true
 
 [build]
@@ -13,13 +13,13 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "read_content,read_products,write_script_tags,write_themes"
 
 [auth]
 redirect_urls = [
-  "https://docs-smithsonian-vacuum-presence.trycloudflare.com/auth/callback",
-  "https://docs-smithsonian-vacuum-presence.trycloudflare.com/auth/shopify/callback",
-  "https://docs-smithsonian-vacuum-presence.trycloudflare.com/api/auth/callback"
+  "https://secrets-observer-ok-tied.trycloudflare.com/auth/callback",
+  "https://secrets-observer-ok-tied.trycloudflare.com/auth/shopify/callback",
+  "https://secrets-observer-ok-tied.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

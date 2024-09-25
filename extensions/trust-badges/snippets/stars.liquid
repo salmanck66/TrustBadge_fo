@@ -1,0 +1,11 @@
+<div class="trust-badges">
+  {% for badge in badges %}
+    <img 
+      src="{{ badge | image_url: 'small' }}" 
+      alt="Trust Badge" 
+      width="50" 
+      height="50"
+      class="trust-badge-icon"
+    />
+  {% endfor %}
+</div>
